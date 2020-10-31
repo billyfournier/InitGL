@@ -8,10 +8,6 @@
 // Include GLFW for Window and I/O control
 #include <GLFW/glfw3.h>
 
-// // Include GLM
-// #include <glm/glm.hpp>
-// using namespace glm;
-
 int main(){
     // Initialise GLFW
     if( !glfwInit() )
@@ -20,23 +16,23 @@ int main(){
         return -1;
     }
 
-    glfwWindowHint(GLFW_SAMPLES, 4); // 4x antialiasing
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // We want OpenGL 3.3
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // We don't want the old OpenGL 
+    glfwWindowHint(GLFW_SAMPLES, 4);                // 4x antialiasing
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);  // OpenGL Version 4.x
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);  // OpenGL Version x.5
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Open a window and create its OpenGL context
-    GLFWwindow* window; // (In the accompanying source code, this variable is global for simplicity)
+    GLFWwindow* window;
     window = glfwCreateWindow( 1024, 768, "InitGL", NULL, NULL);
     if( window == NULL ){
         fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
         glfwTerminate();
         return -1;
     }
-
     glfwMakeContextCurrent(window);
 
+    // Initialize GLAD
     int gladInitRes = gladLoadGL();
     if (!gladInitRes) {
         fprintf(stderr, "Unable to initialize glad\n");
@@ -44,7 +40,8 @@ int main(){
         glfwTerminate();
         return -1;
     }
-    // Ensure we can capture the escape key being pressed below
+    
+    // Enable key press capture
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
 
